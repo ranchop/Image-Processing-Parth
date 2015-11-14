@@ -17,13 +17,13 @@ if nargin < 2
 end
 
 %% Copy file to desktop
-desktop_path = winqueryreg('HKEY_CURRENT_USER', 'Software\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders', 'Desktop');
-copyfile(fullfile(file_path),desktop_path,'f');
+temp_path = matlabroot;
+copyfile(fullfile(file_path),temp_path,'f');
 [~,filename,format] = fileparts(file_path); filename = [filename,format]; format = format(2:end);
 
 %% Load .aia image
 if (strcmp(format, 'aia'))
-    fid=fopen(fullfile(desktop_path,filename),'r');
+    fid=fopen(fullfile(temp_path,filename),'r');
     header=fread(fid,5,'uint8');
     sizes=fread(fid,3,'uint16');
     rows=sizes(1);
@@ -39,12 +39,12 @@ end
 
 %% Load .fits image
 if (strcmp(format, 'fits'))
-    data=fitsread(fullfile(desktop_path,filename));
+    data=fitsread(fullfile(temp_path,filename));
     absimg=(data(:,:,2)-data(:,:,3))./(data(:,:,1)-data(:,:,3));
 end
 
 %% Delete the temporary desktop file
-delete(fullfile(desktop_path,filename));
+delete(fullfile(temp_path,filename));
 
 %% Replace "bad" pixels with the average of surrounding
 if replace_bad_pixels
