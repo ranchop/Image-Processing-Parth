@@ -22,7 +22,7 @@ function varargout = Bimodality_GUI(varargin)
 
 % Edit the above text to modify the response to help Bimodality_GUI
 
-% Last Modified by GUIDE v2.5 12-Nov-2015 23:15:35
+% Last Modified by GUIDE v2.5 13-Nov-2015 17:14:12
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -327,3 +327,162 @@ function Center_Rp_Btn_Callback(hObject, eventdata, handles)
 % hObject    handle to Center_Rp_Btn (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+
+
+
+function Max_Radius_Input_Callback(hObject, eventdata, handles)
+% hObject    handle to Max_Radius_Input (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of Max_Radius_Input as text
+%        str2double(get(hObject,'String')) returns contents of Max_Radius_Input as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function Max_Radius_Input_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to Max_Radius_Input (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+% --- Executes on button press in Radial_Avg_M1_Btn.
+function Radial_Avg_M1_Btn_Callback(hObject, eventdata, handles)
+% hObject    handle to Radial_Avg_M1_Btn (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+
+% --- Executes on button press in Radial_Avg_M2_Btn.
+function Radial_Avg_M2_Btn_Callback(hObject, eventdata, handles)
+% hObject    handle to Radial_Avg_M2_Btn (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+
+
+function CutoffR_Min_Input_Callback(hObject, eventdata, handles)
+% hObject    handle to CutoffR_Min_Input (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of CutoffR_Min_Input as text
+%        str2double(get(hObject,'String')) returns contents of CutoffR_Min_Input as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function CutoffR_Min_Input_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to CutoffR_Min_Input (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+function CutoffR_Max_Input_Callback(hObject, eventdata, handles)
+% hObject    handle to CutoffR_Max_Input (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of CutoffR_Max_Input as text
+%        str2double(get(hObject,'String')) returns contents of CutoffR_Max_Input as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function CutoffR_Max_Input_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to CutoffR_Max_Input (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+% --- Executes on button press in Wings_Fit_Gauss_Btn.
+function Wings_Fit_Gauss_Btn_Callback(hObject, eventdata, handles)
+% hObject    handle to Wings_Fit_Gauss_Btn (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+
+
+function Plot_WingsFit_CutoffR_Input_Callback(hObject, eventdata, handles)
+% hObject    handle to Plot_WingsFit_CutoffR_Input (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of Plot_WingsFit_CutoffR_Input as text
+%        str2double(get(hObject,'String')) returns contents of Plot_WingsFit_CutoffR_Input as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function Plot_WingsFit_CutoffR_Input_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to Plot_WingsFit_CutoffR_Input (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+function CutoffR_Avg_Min_Input_Callback(hObject, eventdata, handles)
+% hObject    handle to CutoffR_Avg_Min_Input (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of CutoffR_Avg_Min_Input as text
+%        str2double(get(hObject,'String')) returns contents of CutoffR_Avg_Min_Input as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function CutoffR_Avg_Min_Input_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to CutoffR_Avg_Min_Input (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+function CutoffR_Avg_Max_Input_Callback(hObject, eventdata, handles)
+% hObject    handle to CutoffR_Avg_Max_Input (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of CutoffR_Avg_Max_Input as text
+%        str2double(get(hObject,'String')) returns contents of CutoffR_Avg_Max_Input as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function CutoffR_Avg_Max_Input_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to CutoffR_Avg_Max_Input (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
