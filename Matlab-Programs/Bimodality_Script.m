@@ -3,8 +3,9 @@
 % Resquests here
 
 %% User Defined Parameters
-data_folder = 'C:\Users\Elder\Dropbox (MIT)\BEC1\Image Data and Cicero Files\Data - Raw Images\2015\2015-11\2015-11-13';
-filename = '11-13-2015_16_47_02.fits';
+% data_folder = 'C:\Users\Elder\Dropbox (MIT)\BEC1\Image Data and Cicero Files\Data - Raw Images\2015\2015-11\2015-11-13';
+data_folder = 'C:\Users\Parth Patel\Documents\GitHub\Image-Processing\Sample-Images\2015-11-12';
+filename = '11-13-2015_ 0_46_57.fits';
 % filename = filenames{8};
 crop_width = 100;
 image_min_max = [0,0.2];

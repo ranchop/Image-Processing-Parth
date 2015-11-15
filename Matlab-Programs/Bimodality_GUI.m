@@ -22,7 +22,7 @@ function varargout = Bimodality_GUI(varargin)
 
 % Edit the above text to modify the response to help Bimodality_GUI
 
-% Last Modified by GUIDE v2.5 13-Nov-2015 17:14:12
+% Last Modified by GUIDE v2.5 14-Nov-2015 19:12:53
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -486,3 +486,202 @@ function CutoffR_Avg_Max_Input_CreateFcn(hObject, eventdata, handles)
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor','white');
 end
+
+
+% --- Executes on selection change in Mass_Selector.
+function Mass_Selector_Callback(hObject, eventdata, handles)
+% hObject    handle to Mass_Selector (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: contents = cellstr(get(hObject,'String')) returns Mass_Selector contents as cell array
+%        contents{get(hObject,'Value')} returns selected item from Mass_Selector
+
+
+% --- Executes during object creation, after setting all properties.
+function Mass_Selector_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to Mass_Selector (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: popupmenu controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+function TOF_Input_Callback(hObject, eventdata, handles)
+% hObject    handle to TOF_Input (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of TOF_Input as text
+%        str2double(get(hObject,'String')) returns contents of TOF_Input as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function TOF_Input_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to TOF_Input (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+function Pixel_Size_Input_Callback(hObject, eventdata, handles)
+% hObject    handle to Pixel_Size_Input (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of Pixel_Size_Input as text
+%        str2double(get(hObject,'String')) returns contents of Pixel_Size_Input as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function Pixel_Size_Input_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to Pixel_Size_Input (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+% --- Executes on button press in Export_All_Btn.
+function Export_All_Btn_Callback(hObject, eventdata, handles)
+% hObject    handle to Export_All_Btn (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+
+% --- Executes on button press in Export_To_Btn.
+function Export_To_Btn_Callback(hObject, eventdata, handles)
+% hObject    handle to Export_To_Btn (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+
+% --- Executes on button press in pushbutton14.
+function pushbutton14_Callback(hObject, eventdata, handles)
+% hObject    handle to pushbutton14 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+
+% --- Executes on button press in pushbutton15.
+function pushbutton15_Callback(hObject, eventdata, handles)
+% hObject    handle to pushbutton15 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+
+% --- Executes on button press in Copy_Clipboard_Btn.
+function Copy_Clipboard_Btn_Callback(hObject, eventdata, handles)
+% hObject    handle to Copy_Clipboard_Btn (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+
+
+function Folder_Input_Callback(hObject, eventdata, handles)
+% hObject    handle to Folder_Input (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of Folder_Input as text
+%        str2double(get(hObject,'String')) returns contents of Folder_Input as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function Folder_Input_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to Folder_Input (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+% --- Executes on button press in Folder_Btn.
+function Folder_Btn_Callback(hObject, eventdata, handles)
+% hObject    handle to Folder_Btn (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+
+
+function Filename_Input_Callback(hObject, eventdata, handles)
+% hObject    handle to Filename_Input (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of Filename_Input as text
+%        str2double(get(hObject,'String')) returns contents of Filename_Input as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function Filename_Input_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to Filename_Input (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+% --- Executes on button press in Filename_Btn.
+function Filename_Btn_Callback(hObject, eventdata, handles)
+% hObject    handle to Filename_Btn (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+
+% --- Executes on button press in pushbutton20.
+function pushbutton20_Callback(hObject, eventdata, handles)
+% hObject    handle to pushbutton20 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+
+% --- Executes on button press in pushbutton21.
+function pushbutton21_Callback(hObject, eventdata, handles)
+% hObject    handle to pushbutton21 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+
+% --- Executes on button press in pushbutton22Watch_Folder_Btn.
+function pushbutton22Watch_Folder_Btn_Callback(hObject, eventdata, handles)
+% hObject    handle to pushbutton22Watch_Folder_Btn (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+
+% --- Executes on button press in Max_Radius_m_Btn.
+function Max_Radius_m_Btn_Callback(hObject, eventdata, handles)
+% hObject    handle to Max_Radius_m_Btn (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+
+% --- Executes on button press in Max_Radius_p_Btn.
+function Max_Radius_p_Btn_Callback(hObject, eventdata, handles)
+% hObject    handle to Max_Radius_p_Btn (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
