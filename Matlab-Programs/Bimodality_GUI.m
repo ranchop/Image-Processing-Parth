@@ -22,7 +22,7 @@ function varargout = Bimodality_GUI(varargin)
 
 % Edit the above text to modify the response to help Bimodality_GUI
 
-% Last Modified by GUIDE v2.5 14-Nov-2015 19:12:53
+% Last Modified by GUIDE v2.5 15-Nov-2015 11:10:42
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -683,5 +683,12 @@ function Max_Radius_m_Btn_Callback(hObject, eventdata, handles)
 % --- Executes on button press in Max_Radius_p_Btn.
 function Max_Radius_p_Btn_Callback(hObject, eventdata, handles)
 % hObject    handle to Max_Radius_p_Btn (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+
+% --- Executes on button press in center_xp_btn.
+function Center_Xp_Btn_Callback(hObject, eventdata, handles)
+% hObject    handle to center_xp_btn (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
