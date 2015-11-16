@@ -22,7 +22,7 @@ function varargout = Bimodality_GUI(varargin)
 
 % Edit the above text to modify the response to help Bimodality_GUI
 
-% Last Modified by GUIDE v2.5 16-Nov-2015 00:23:14
+% Last Modified by GUIDE v2.5 16-Nov-2015 10:14:33
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -57,8 +57,8 @@ addpath(fullfile(fileparts(pwd),'Matlab-Functions-Image-Processing'));
 
 % Default values
 handles.load_images.folder = fullfile(fileparts(pwd),'Sample-Images'); set(handles.Folder_Input,'String',handles.load_images.folder);
-handles.plot_settings.max_od = 0.4; set(handles.Max_OD_Input,'String',handles.plot_settings.max_od);
-
+handles.plot_settings.max_od = 0.4; set(handles.Max_OD_Slider,'String',handles.plot_settings.max_od);
+handles.current_image.crop_width = 150; set(handles.Crop_Width_Input,'Value',handles.current_image.crop_width);
 
 
 % Choose default command line output for Bimodality_GUI
@@ -690,14 +690,7 @@ function Load_Only_Btn_Callback(hObject, eventdata, handles)
 % hObject    handle to Load_Only_Btn (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-handles.current_image.filepath = fullfile(handles.load_images.folder,handles.load_images.filename);
-handles.current_image.raw_data = load_img(handles.current_image.filepath);
-axes(handles.Abs_Image_Crop_Axes);
-imshow(handles.current_image.raw_data,[0,handles.plot_settings.max_od]);
-[t1,t2] = getpts
-crop_settings = [t1-crop_width/2,t2-crop_width/2,crop_width,crop_width];
-handles.current_image.data = imcrop(handles.current_image.raw_data,crop_settings);
-imshow(handles.current_image.data,[[0,handles.plot_settings.max_od]])
+handles = process_file(handles,'load','rough_center','crop','show_image');
 guidata(hObject, handles);
 
 % --- Executes on button press in Watch_Folder_Btn.
@@ -728,28 +721,116 @@ function Center_Xp_Btn_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 
 
-
-function Max_OD_Input_Callback(hObject, eventdata, handles)
-% hObject    handle to Max_OD_Input (see GCBO)
+% --- Executes on slider movement.
+function Crop_Width_Input_Callback(hObject, eventdata, handles)
+% hObject    handle to Crop_Width_Input (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-handles.plot_settings.max_od = str2double(get(hObject,'String'));
-if handles.plot_settings.max_od > 0
-    
-    guidata(hObject, handles);
-else
-    disp('Error: Invalid OD input. Must be greater than 0!');
-end
+handles.current_image.crop_width = get(hObject,'Value');
+handles = process_file(handles,'crop','show_image');
+guidata(hObject, handles);
 
 
 % --- Executes during object creation, after setting all properties.
-function Max_OD_Input_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to Max_OD_Input (see GCBO)
+function Crop_Width_Input_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to Crop_Width_Input (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    empty - handles not created until after all CreateFcns called
 
-% Hint: edit controls usually have a white background on Windows.
-%       See ISPC and COMPUTER.
-if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
-    set(hObject,'BackgroundColor','white');
+% Hint: slider controls usually have a light gray background.
+if isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor',[.9 .9 .9]);
+end
+
+
+% --- Executes on button press in Recrop_Btn.
+function Recrop_Btn_Callback(hObject, eventdata, handles)
+% hObject    handle to Recrop_Btn (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+handles = process_file(handles,'rough_center','crop','show_image');
+guidata(hObject, handles);
+
+
+
+
+function [handles_out] = process_file(handles,varargin)
+% Loop through all listed tasks in varargin
+for i = 1:length(varargin)
+switch lower(varargin{i})
+    case 'load'
+        handles.current_image.filepath = fullfile(handles.load_images.folder,handles.load_images.filename);
+        handles.current_image.raw_data = load_img(handles.current_image.filepath);
+    case 'rough_center'
+        axes(handles.Abs_Image_Crop_Axes); imshow(handles.current_image.raw_data,[0,handles.plot_settings.max_od]);
+        [center_x,center_y] = getpts; handles.current_image.raw_center = [center_x,center_y];
+    case 'crop'
+        crop_settings = [handles.current_image.raw_center(1)-handles.current_image.crop_width/2,handles.current_image.raw_center(2)-handles.current_image.crop_width/2,handles.current_image.crop_width,handles.current_image.crop_width];
+        handles.current_image.data = imcrop(handles.current_image.raw_data,crop_settings);
+    case 'show_image'
+        imshow(handles.current_image.data,[[0,handles.plot_settings.max_od]]);
+    case 'd'
+end
+end
+handles_out = handles;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+% --- Executes on slider movement.
+function slider2_Callback(hObject, eventdata, handles)
+% hObject    handle to Max_OD_Slider (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'Value') returns position of slider
+%        get(hObject,'Min') and get(hObject,'Max') to determine range of slider
+
+
+% --- Executes during object creation, after setting all properties.
+function slider2_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to Max_OD_Slider (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: slider controls usually have a light gray background.
+if isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor',[.9 .9 .9]);
+end
+
+
+% --- Executes on slider movement.
+function Max_OD_Slider_Callback(hObject, eventdata, handles)
+% hObject    handle to Max_OD_Slider (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+handles.plot_settings.max_od = get(hObject,'Value');
+handles = process_file(handles,'show_image');
+guidata(hObject, handles);
+
+
+% --- Executes during object creation, after setting all properties.
+function Max_OD_Slider_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to Max_OD_Slider (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: slider controls usually have a light gray background.
+if isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor',[.9 .9 .9]);
 end
