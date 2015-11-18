@@ -2,7 +2,7 @@ function [ absimg ] = load_img( file_path, replace_bad_pixels )
 
 %% Description
 % file_path -- a complete path to the image, ex: 'H:\user4\matlab\myfile.txt'
-% remove_bad_pixels -- should it replace bad pixels? By default, it is yes (= 1).
+% OPTIONAL remove_bad_pixels -- should it replace bad pixels? By default, it is yes (= 1).
 % absimg -- log(I_0,I_atoms).
 
 %% Procedure
