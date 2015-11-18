@@ -5,12 +5,12 @@
 %% Initialize
 addpath(fullfile(fileparts(pwd),'Matlab-Functions-Image-Processing'));
 data_folder = fullfile(fileparts(pwd),'Sample-Images\2015-11-17');
-sample_filename = '11-18-2015_ 1_28_29.fits';
+sample_filename = '2015-11-18-01;17;00.fits';
 
 samp_data = load_img(fullfile(data_folder,sample_filename));
 figure;
-imshow(samp_data,[0 5]);
-
+imshow(samp_data,[0 0.5]);
+imshowpair(samp_data,edge(samp_data),'montage')
 
 
 % % % % %% Trial 
