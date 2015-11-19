@@ -22,7 +22,7 @@ function varargout = Properties_Selector(varargin)
 
 % Edit the above text to modify the response to help Properties_Selector
 
-% Last Modified by GUIDE v2.5 18-Nov-2015 18:58:27
+% Last Modified by GUIDE v2.5 19-Nov-2015 00:03:07
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -52,25 +52,23 @@ function Properties_Selector_OpeningFcn(hObject, eventdata, handles, varargin)
 % handles    structure with handles and user data (see GUIDATA)
 % varargin   command line arguments to Properties_Selector (see VARARGIN)
 
-% Get all property Names
-all_names = {'A';'B';'C';'D';'E'}; % Get from Julian's Program, Make sure its column cell
-all_logical = cell(size(all_names));
+% Get all property Names and Initialize the Table
+handles = get_all_names(handles); 
+all_logical = cell(size(handles.all_names));
 for i =1:length(all_logical)
     all_logical{i} = false;
 end
-data = [all_names,all_logical];
-% Populate Property_Table
+data = [handles.all_names,all_logical,all_logical];
 set(handles.Property_Table,'Data',data);
-handles.selected_names = {'temp'};
 
 % Choose default command line output for Properties_Selector
-handles.output = handles.selected_names;
+handles.output = {'Default'};
 
 % Update handles structure
 guidata(hObject, handles);
 
 % UIWAIT makes Properties_Selector wait for user response (see UIRESUME)
-% uiwait(handles.figure1);
+uiwait(handles.figure1);
 
 
 % --- Outputs from this function are returned to the command line.
@@ -83,6 +81,8 @@ function varargout = Properties_Selector_OutputFcn(hObject, eventdata, handles)
 
 % Get default command line output from handles structure
 varargout{1} = handles.output;
+delete(hObject);
+% close(ancestor(hObject,'figure'))
 
 
 % --- Executes on button press in Close_Btn.
@@ -92,10 +92,43 @@ function Close_Btn_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 all_data = get(handles.Property_Table,'Data');
 selected_names = {}; j=1;
+selected_editable = [];
 for i = 1:size(all_data,1)
-    if all_data{i,2}, selected_names{j} = all_data{i,1}; j=j+1; end
+    if all_data{i,2}
+        selected_names{j} = all_data{i,1}; 
+        selected_editable = [selected_editable, all_data{i,3}];
+        j=j+1; 
+    end
 end
-selected_names = selected_names';
+outp.selected_names = selected_names';
+outp.selected_editable = logical(selected_editable);
+outp.update = 1;
+handles.output = outp;
 guidata(hObject, handles);
-varargout{2} = handles.output;
-% close(ancestor(hObject,'figure'))
+uiresume(handles.figure1);
+
+
+% --- Executes when user attempts to close figure1.
+function figure1_CloseRequestFcn(hObject, eventdata, handles)
+% hObject    handle to figure1 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+outp.update = 0;
+handles.output = outp;
+guidata(hObject, handles);
+uiresume(handles.figure1);
+% Hint: delete(hObject) closes the figure
+% delete(hObject);
+
+
+
+
+
+
+
+
+
+% --- USER DEFINED FUNCTION ---
+function handles = get_all_names(handles)
+% Get from Julian's Program, Make sure its column cell
+handles.all_names = {'A';'B';'C';'D';'E'};

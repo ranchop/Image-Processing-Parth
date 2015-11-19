@@ -22,7 +22,7 @@ function varargout = Data_Explorer(varargin)
 
 % Edit the above text to modify the response to help Data_Explorer
 
-% Last Modified by GUIDE v2.5 18-Nov-2015 18:35:48
+% Last Modified by GUIDE v2.5 19-Nov-2015 01:59:36
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -52,9 +52,19 @@ function Data_Explorer_OpeningFcn(hObject, eventdata, handles, varargin)
 % handles    structure with handles and user data (see GUIDATA)
 % varargin   command line arguments to Data_Explorer (see VARARGIN)
 
-% Populate default values in Data Explorer
-handles = update_data_explorer_table(handles);
+% Disable Other Buttons until Folder has been selected
+set(handles.Properties_Menu,'Enable','off');
+set(handles.Rescan_Btn,'Enable','off');
 
+
+% Initialize Table
+col_names = {'Filename'}; col_format = {'text'}; col_width = {160}; col_edit = logical([0]);
+default_data = {'ImgA' ; 'ImgB' ; 'ImgC' ; 'ImgD'};
+t = handles.Data_Explorer_Table;
+set(t,'ColumnName',col_names,'ColumnEditable',col_edit,'ColumnWidth',col_width,'RearrangeableColumns','on','Data',default_data);
+handles.all.names = col_names;
+handles.all.editable = col_edit;
+handles.all.data = default_data;
 
 % Choose default command line output for Data_Explorer
 handles.output = hObject;
@@ -90,6 +100,9 @@ function Data_Explorer_Table_CellSelectionCallback(hObject, eventdata, handles)
 % eventdata  structure with the following fields (see MATLAB.UI.CONTROL.TABLE)
 %	Indices: row and column indices of the cell(s) currently selecteds
 % handles    structure with handles and user data (see GUIDATA)
+handles.current.row = eventdata.Indices(1);
+% Whachya wanna do with selected file?
+guidata(hObject, handles);
 
 
 % --- Executes when entered data in editable cell(s) in Data_Explorer_Table.
@@ -133,7 +146,55 @@ function Properties_Menu_Callback(hObject, eventdata, handles)
 % hObject    handle to Properties_Menu (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-select_names(handles);
+outp = Properties_Selector();
+if outp.update
+    handles.all.names = outp.selected_names;
+    handles.all.editable = outp.selected_editable;
+    handles = update_data_explorer_table(handles);
+    guidata(hObject, handles);
+end
+
+
+
+% --- Executes on button press in Select_Folder_Btn.
+function Select_Folder_Btn_Callback(hObject, eventdata, handles)
+% hObject    handle to Select_Folder_Btn (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+t = uigetdir();
+if t(1)>0
+    handles.load.folder = t;
+    set(handles.Select_Folder_Disp,'String',[handles.load.folder]);
+    handles = get_all_fits_files(handles);
+    handles.all.num_added = length(handles.all.filenames);
+    set(handles.Image_Count_Disp,'String',['Images: ',num2str(length(handles.all.filenames)),' Added: ',num2str(handles.all.num_added)]);
+    handles = get_all_name_value(handles);
+    handles =  update_data_explorer_table(handles);
+    guidata(hObject, handles);
+end
+set(handles.Properties_Menu,'Enable','on');
+set(handles.Rescan_Btn,'Enable','on');
+
+
+
+
+% --- Executes on button press in Rescan_Btn.
+function Rescan_Btn_Callback(hObject, eventdata, handles)
+% hObject    handle to Rescan_Btn (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+total_files = length(handles.all.filenames);
+handles = get_all_fits_files(handles); 
+handles.all.num_added = length(handles.all.filenames) - total_files;
+set(handles.Image_Count_Disp,'String',['Images: ',num2str(length(handles.all.filenames))]);
+handles = get_all_name_value(handles);
+handles =  update_data_explorer_table(handles);
+guidata(hObject, handles);
+
+
+
+
+
 
 
 
@@ -147,25 +208,37 @@ select_names(handles);
 
 % --- USER DEFINED FUNCTION ---
 function handles =  update_data_explorer_table(handles)
-% Define Table Properties
-col_names = {'A','B','C'};
-col_format = {'numeric','numeric','Logical'};
-col_width = {100 100 50};
-col_edit = [true true true];
-default_data = {1,10,true ; 2,20,true ; 3,30,true ; 4,40,true};
-% Update Table
 t = handles.Data_Explorer_Table;
-set(t,'ColumnName',col_names,'ColumnFormat',col_format,...
-    'ColumnWidth',col_width,'ColumnEditable',col_edit,...
-    'RearrangeableColumns','on',...
-    'Data',default_data);
-handles.data_explorer.data = default_data;
+set(t,'ColumnName',handles.all.names,...
+    'ColumnEditable',handles.all.editable,...
+    'Data',handles.all.data);
 
+function handles = get_all_fits_files(handles)
+t = dir(fullfile(handles.load.folder,'*.fits'));
+all_filenames = cell(length(t),1);
+for i=1:length(t)
+    all_filenames{i} = t(i).name;
+end
+handles.all.filenames = all_filenames;
 
-function handles = select_names(handles)
-t = Properties_Selector();
-handles.data_explorer.selected_names = t.selected_names;
-handles.data_explorer.all_names = t.all_names;
-handles.data_explorer.all_logicals = t.all_logicals;
+function handles = get_current_name_value(handles)
+handles.all.names
+handles.current.row;
+filename = handles.current.filename;
+names = handles.all.names;
+values = num2cell(zeros(size(names)));
+% values = Julian(filename, names);
+handles.current.values = values;
 
-
+function handles = get_all_name_value(handles)
+filenames = handles.all.filenames;
+names = handles.all.names;
+data = cell(length(filenames),length(names));
+for i = 1:length(filenames)
+    values = num2cell(zeros(size(names))); % values = Julian(filenames{i},names)
+    data{i,1} = filenames{i};
+    for j = 2:length(names)
+        data{i,j} = values{j};
+    end
+end
+handles.all.data = data;
