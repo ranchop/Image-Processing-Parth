@@ -131,4 +131,4 @@ uiresume(handles.figure1);
 % --- USER DEFINED FUNCTION ---
 function handles = get_all_names(handles)
 % Get from Julian's Program, Make sure its column cell
-handles.all_names = {'A';'B';'C';'D';'E'};
+handles.all_names = {'ImageName';'TOF';'RF23';'LiTandemFreq';'RF_Power'};
