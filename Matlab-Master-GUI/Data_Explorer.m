@@ -22,7 +22,7 @@ function varargout = Data_Explorer(varargin)
 
 % Edit the above text to modify the response to help Data_Explorer
 
-% Last Modified by GUIDE v2.5 19-Nov-2015 01:59:36
+% Last Modified by GUIDE v2.5 19-Nov-2015 18:18:31
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -51,6 +51,9 @@ function Data_Explorer_OpeningFcn(hObject, eventdata, handles, varargin)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 % varargin   command line arguments to Data_Explorer (see VARARGIN)
+
+% Add path for functions
+addpath('C:\Users\Elder\Documents\GitHub\Image-Processing-Parth\Matlab-Functions-Image-Processing');
 
 % Disable Other Buttons until Folder has been selected
 set(handles.Properties_Menu,'Enable','off');
@@ -100,9 +103,11 @@ function Data_Explorer_Table_CellSelectionCallback(hObject, eventdata, handles)
 % eventdata  structure with the following fields (see MATLAB.UI.CONTROL.TABLE)
 %	Indices: row and column indices of the cell(s) currently selecteds
 % handles    structure with handles and user data (see GUIDATA)
-handles.current.row = eventdata.Indices(1);
-% Whachya wanna do with selected file?
-guidata(hObject, handles);
+if length(eventdata.Indices) && isfield(handles.all,'filenames')
+    handles.current.row = eventdata.Indices(1);
+    handles = update_current(handles);
+    guidata(hObject, handles);
+end
 
 
 % --- Executes when entered data in editable cell(s) in Data_Explorer_Table.
@@ -150,7 +155,7 @@ outp = Properties_Selector();
 if outp.update
     handles.all.names = outp.selected_names;
     handles.all.editable = outp.selected_editable;
-    handles = update_data_explorer_table(handles);
+    Rescan_Btn_Callback(hObject,eventdata,handles);
     guidata(hObject, handles);
 end
 
@@ -186,10 +191,17 @@ function Rescan_Btn_Callback(hObject, eventdata, handles)
 total_files = length(handles.all.filenames);
 handles = get_all_fits_files(handles); 
 handles.all.num_added = length(handles.all.filenames) - total_files;
-set(handles.Image_Count_Disp,'String',['Images: ',num2str(length(handles.all.filenames))]);
+set(handles.Image_Count_Disp,'String',['Images: ',num2str(length(handles.all.filenames)),' Added: ',num2str(handles.all.num_added)]);
 handles = get_all_name_value(handles);
 handles =  update_data_explorer_table(handles);
 guidata(hObject, handles);
+
+
+% --- Executes on button press in Crop_Btn.
+function Crop_Btn_Callback(hObject, eventdata, handles)
+% hObject    handle to Crop_Btn (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
 
 
 
@@ -221,14 +233,14 @@ for i=1:length(t)
 end
 handles.all.filenames = all_filenames;
 
-function handles = get_current_name_value(handles)
-handles.all.names
-handles.current.row;
-filename = handles.current.filename;
-names = handles.all.names;
-values = num2cell(zeros(size(names)));
-% values = Julian(filename, names);
-handles.current.values = values;
+% function handles = get_current_name_value(handles)
+% handles.all.names
+% handles.current.row;
+% filename = handles.current.filename;
+% names = handles.all.names;
+% values = num2cell(zeros(size(names)));
+% % values = Julian(filename, names);
+% handles.current.values = values;
 
 function handles = get_all_name_value(handles)
 filenames = handles.all.filenames;
@@ -242,3 +254,14 @@ for i = 1:length(filenames)
     end
 end
 handles.all.data = data;
+
+function handles = update_current(handles)
+row = handles.current.row;
+fname = handles.all.filenames{row};
+fpath = fullfile(handles.load.folder,fname);disp(fpath);
+% additional values for selected file??
+raw_img = load_img(fpath);
+axes(handles.Cropped_Image_Axes); imshow(raw_img);
+handles.current.filename = fname;
+handles.current.raw_img = raw_img;
+
