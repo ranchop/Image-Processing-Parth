@@ -18,7 +18,7 @@ end
 
 %% Copy file to desktop
 temp_path = fileparts(userpath);
-copyfile(fullfile(file_path),temp_path,'f');
+copyfile(file_path,temp_path,'f');
 [~,filename,format] = fileparts(file_path); filename = [filename,format]; format = format(2:end);
 
 %% Load .aia image
