@@ -1,4 +1,6 @@
-function [ histdata histcen ] = ProbDensityHist( filepath)
+% function [ histdata histcen ] = ProbDensityHist( filepath)
+
+filepath='\\Elder-pc\j\Elder Backup Raw Images\2016\2016-01\2016-01-27\01-27-2016_21_27_09.fits';
 % Process Inputs
 fighand = figure;
 
@@ -23,7 +25,7 @@ woa = imcrop(woa,rect);
 dark = imcrop(dark,rect);
 
 % Binning
-binpix = 4;
+binpix = 2;
 wab = zeros(fix(size(abs,1)/binpix),fix(size(abs,2)/binpix));
 woab = wab;
 darkb = wab;
@@ -39,25 +41,23 @@ end
 
 absb = log( (woab-darkb) ./ (wab-darkb) );
 
-% Plot
-figure(fighand);
-subplot(2,2,1);
-imshow(abs,[0,1.5]);
-subplot(2,2,2);
-imshow(absb,[0 1.5]);
-title('Bin 4');
-subplot(2,2,3)
-hist(abs(:),20);
-xlim([-0.5 2]);
-subplot(2,2,4)
+absb=real(absb(:));
+N=size(absb,1);
+ODmax=2; % the maximum of the grid
+ODmin=0; % the minimum of the grid
+Gsize=41; % size of the grid
+n=linspace(ODmin,ODmax,Gsize);
+dn=(ODmax-ODmin)/(Gsize-1); % interval of the grid
+Pn=n*0; %P(n)
 
-hist(absb(:),10);
-xlim([-0.5 2]);
-title('Bin 4');
+sizeofpixel=binpix^2*1; % arb unit for now
+g=1*sizeofpixel; % a coefficient converting OD to atom number in one pixel
 
-% Outputs
-[histdata, histcen] = hist(absb(:),20);
-
+for i=1:N
+    K=round((absb(i)-ODmin)/dn)+1;
+    if K>=0 && K<Gsize
+        Pn(K+1)=Pn(K+1)+absb(i)*g/dn;
+    end
 end
-
+scatter(n,Pn)
 
