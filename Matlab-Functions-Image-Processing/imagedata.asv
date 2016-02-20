@@ -1,4 +1,4 @@
-function [ data, rawdata ] = imagedata( filename, varargin )
+function [ rawdata ] = imagedata( filename, varargin )
 %% Information
 
 
@@ -157,21 +157,16 @@ data.OD_unmodified = data.OD;
 if fixOD
     tempOD = data.OD_unmodified;
     tempOD(abs(tempOD)==Inf) = NaN;         % Replace +-Inf with NaN
-    tempOD(imag(tempOD)~=0) = NaN;
     t1 = size(data.OD,1); t2 = size(data.OD,2); t3 = fixOD_avg;
     troublepts = isnan(data.OD);            % Do something with the NaN points
-    data.bad_OD_pts_fixed = sum(troublepts(:));
     for i = 1:size(data.OD,1)
         for j = 1:size(data.OD,2)
             if troublepts(i,j)
-                data.OD(i,j) = mean(mean(tempOD( max(1,i-t3):min(t1,i+t3) , max(1,j-t3):min(t2,j+t3) ), 'omitnan'),'omitnan');
-                % If all neighbors are nan's than increase neighborhood.
-                while isnan(data.OD(i,j)), t3 = t3+1; data.OD(i,j) = mean(mean(tempOD( max(1,i-t3):min(t1,i+t3) , max(1,j-t3):min(t2,j+t3) ), 'omitnan'),'omitnan'); end 
+                data.OD(i,j) = mean(tempOD( max(1,i-t3):min(t1,i+t3) , max(1,j-t3):min(t2,j+t3) ), 'omitnan');
+                if isnan(data.OD(i,j)), 
             end
         end
     end
-    data.OD = real(data.OD);
-%     disp(sum(sum( data.OD == Inf  )));
 end
 
 
