@@ -184,15 +184,8 @@ end
 data.od = -log(data.abs2);
 data.badpts2 = sum(sum( abs(data.od)==Inf || imag(data.od)~=0  ));
 
-% crop image
+% cropping image
 switch crop_set{1}
-    case 'none'
-    case 'rect'
-        
-    case 'ellipse'
-end
-
-
 
 end
 
